@@ -2,7 +2,7 @@ import { Plugin } from './../../core/';
 
 
 
-class PluginSample extends Plugin {
+class Gpio extends Plugin {
   get props() {
     return {
       dependencies: [],
@@ -20,4 +20,4 @@ class PluginSample extends Plugin {
 }
 
 
-export default PluginSample;
+export default Gpio;

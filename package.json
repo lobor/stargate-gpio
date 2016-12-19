@@ -1,5 +1,5 @@
 {
-  "name": "sample-plugin",
+  "name": "gpio",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

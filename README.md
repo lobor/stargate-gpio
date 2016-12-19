@@ -1,4 +1,2 @@
-# stargate-plugin-sample
-It is sample plugin for [stargate](https://github.com/lobor/stargate)
-
-The wiki is available and being written
+# stargate-gpio
+It is gpio plugin for [stargate](https://github.com/lobor/stargate)
