@@ -1,9 +1,9 @@
-import SampleViews from './../views/sample/Sample.jsx';
+import HomeViews from './../views/home/Home.jsx';
 
 module.exports = [
 	{
-		pattern: '/sample/url',
-		component: SampleViews,
-		name: 'sample_name'
+		pattern: '/gpio',
+		component: HomeViews,
+		name: 'home'
 	}
 ]

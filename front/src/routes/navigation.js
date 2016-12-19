@@ -1,7 +1,7 @@
 module.exports = [
 	{
-		"label": "Sample menu",
-		"href": "/sample/url",
+		"label": "Gpio",
+		"href": "/gpio",
 		"icon": "menu"
 	}
 ];

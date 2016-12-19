@@ -9,17 +9,19 @@ import Routes from './routes/routes';
 // import Menu navigation for the front
 import Navigation from './routes/navigation';
 
+require('./languages/languages');
+
 // import Config
-import Config from './routes/config';
+// import Config from './routes/config';
 
 // Add routes on global app
 setRoutes(Routes);
 
 // Add navigation on global app
-setNavigation(Navigation);
+setNavigation(Navigation, conf.name);
 
 // Add config plugin
-setConfig(conf.name, Config);
+// setConfig(conf.name, Config);
 
 
 
