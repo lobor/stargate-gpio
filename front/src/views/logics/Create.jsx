@@ -6,7 +6,9 @@ class Create extends React.Component{
 
 		this.state = {
 			form: {
-				returnState: false
+				returnState: false,
+				readWrite: 'read',
+				typeSwitch: null,
 			},
 			modelController: null
 		}
@@ -19,6 +21,19 @@ class Create extends React.Component{
 	setReturnState(e, value){
 		let form = this.state.form;
 		form.returnState = value;
+		this.setState({ form: form });
+	}
+
+	selectedReadWrite(e, index, value){
+		let form = this.state.form;
+		form.readWrite = value;
+		this.setState({ form: form });
+	}
+
+	selectedSwitch(e, index, value){
+		console.log(value);
+		let form = this.state.form;
+		form.typeSwitch = value;
 		this.setState({ form: form });
 	}
 
@@ -44,7 +59,16 @@ class Create extends React.Component{
 		        <Ui.MenuItem value={5} primaryText="RPI 2 model B" />
 		        <Ui.MenuItem value={6} primaryText="RPI 3 model A" />
 		        <Ui.MenuItem value={7} primaryText="RPI 3 model B" />
-		        <Ui.MenuItem value={7} primaryText="Arduino" />
+		      </Ui.SelectField>
+					<br />
+					<Ui.SelectField floatingLabelText="Input/Output" value={this.state.form.readWrite} onChange={ this.selectedReadWrite.bind(this) } >
+		        <Ui.MenuItem value="read" primaryText="Input" />
+						<Ui.MenuItem value="write" primaryText="Output" />
+		      </Ui.SelectField>
+					<br />
+					<Ui.SelectField floatingLabelText="Type of switch" value={this.state.form.typeSwitch} disabled={ (this.state.form.readWrite === 'write') ? false : true } onChange={ this.selectedSwitch.bind(this) } >
+		        <Ui.MenuItem value="switch" primaryText="Simple switch" />
+						<Ui.MenuItem value="push" primaryText="Push-button switch" />
 		      </Ui.SelectField>
 					<br />
 					<SelectPin controller={this.state.modelController} />

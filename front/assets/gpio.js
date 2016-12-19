@@ -263,7 +263,7 @@
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -293,7 +293,9 @@
 	
 			_this.state = {
 				form: {
-					returnState: false
+					returnState: false,
+					readWrite: 'read',
+					typeSwitch: null
 				},
 				modelController: null
 			};
@@ -301,19 +303,34 @@
 		}
 	
 		_createClass(Create, [{
-			key: "selectedController",
+			key: 'selectedController',
 			value: function selectedController(e, index, value) {
 				this.setState({ modelController: value });
 			}
 		}, {
-			key: "setReturnState",
+			key: 'setReturnState',
 			value: function setReturnState(e, value) {
 				var form = this.state.form;
 				form.returnState = value;
 				this.setState({ form: form });
 			}
 		}, {
-			key: "render",
+			key: 'selectedReadWrite',
+			value: function selectedReadWrite(e, index, value) {
+				var form = this.state.form;
+				form.readWrite = value;
+				this.setState({ form: form });
+			}
+		}, {
+			key: 'selectedSwitch',
+			value: function selectedSwitch(e, index, value) {
+				console.log(value);
+				var form = this.state.form;
+				form.typeSwitch = value;
+				this.setState({ form: form });
+			}
+		}, {
+			key: 'render',
 			value: function render() {
 				var formReturnState = void 0;
 	
@@ -322,28 +339,41 @@
 				}
 	
 				return React.createElement(
-					"div",
+					'div',
 					null,
 					React.createElement(
-						"form",
+						'form',
 						null,
-						React.createElement(Ui.TextField, { floatingLabelText: "Logic name" }),
-						React.createElement("br", null),
+						React.createElement(Ui.TextField, { floatingLabelText: 'Logic name' }),
+						React.createElement('br', null),
 						React.createElement(
 							Ui.SelectField,
-							{ floatingLabelText: "Select model micro-controller", value: this.state.modelController, onChange: this.selectedController.bind(this) },
-							React.createElement(Ui.MenuItem, { value: 1, primaryText: "RPI zero" }),
-							React.createElement(Ui.MenuItem, { value: 2, primaryText: "RPI 1 model A" }),
-							React.createElement(Ui.MenuItem, { value: 3, primaryText: "RPI 1 model B" }),
-							React.createElement(Ui.MenuItem, { value: 4, primaryText: "RPI 2 model A" }),
-							React.createElement(Ui.MenuItem, { value: 5, primaryText: "RPI 2 model B" }),
-							React.createElement(Ui.MenuItem, { value: 6, primaryText: "RPI 3 model A" }),
-							React.createElement(Ui.MenuItem, { value: 7, primaryText: "RPI 3 model B" }),
-							React.createElement(Ui.MenuItem, { value: 7, primaryText: "Arduino" })
+							{ floatingLabelText: 'Select model micro-controller', value: this.state.modelController, onChange: this.selectedController.bind(this) },
+							React.createElement(Ui.MenuItem, { value: 1, primaryText: 'RPI zero' }),
+							React.createElement(Ui.MenuItem, { value: 2, primaryText: 'RPI 1 model A' }),
+							React.createElement(Ui.MenuItem, { value: 3, primaryText: 'RPI 1 model B' }),
+							React.createElement(Ui.MenuItem, { value: 4, primaryText: 'RPI 2 model A' }),
+							React.createElement(Ui.MenuItem, { value: 5, primaryText: 'RPI 2 model B' }),
+							React.createElement(Ui.MenuItem, { value: 6, primaryText: 'RPI 3 model A' }),
+							React.createElement(Ui.MenuItem, { value: 7, primaryText: 'RPI 3 model B' })
 						),
-						React.createElement("br", null),
+						React.createElement('br', null),
+						React.createElement(
+							Ui.SelectField,
+							{ floatingLabelText: 'Input/Output', value: this.state.form.readWrite, onChange: this.selectedReadWrite.bind(this) },
+							React.createElement(Ui.MenuItem, { value: 'read', primaryText: 'Input' }),
+							React.createElement(Ui.MenuItem, { value: 'write', primaryText: 'Output' })
+						),
+						React.createElement('br', null),
+						React.createElement(
+							Ui.SelectField,
+							{ floatingLabelText: 'Type of switch', value: this.state.form.typeSwitch, disabled: this.state.form.readWrite === 'write' ? false : true, onChange: this.selectedSwitch.bind(this) },
+							React.createElement(Ui.MenuItem, { value: 'switch', primaryText: 'Simple switch' }),
+							React.createElement(Ui.MenuItem, { value: 'push', primaryText: 'Push-button switch' })
+						),
+						React.createElement('br', null),
 						React.createElement(_SelectPin2.default, { controller: this.state.modelController }),
-						React.createElement(Ui.Toggle, { label: "Return State", onToggle: this.setReturnState.bind(this) }),
+						React.createElement(Ui.Toggle, { label: 'Return State', onToggle: this.setReturnState.bind(this) }),
 						formReturnState
 					)
 				);
@@ -374,14 +404,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var options = {
-	  rpi0: [{ value: 1, label: 'pin1' }, { value: 2, label: 'pin2' }, { value: 3, label: 'pin3' }],
-	  rpi1a: [{ value: 1, label: 'pin1' }, { value: 2, label: 'pin2' }, { value: 3, label: 'pin3' }],
-	  rpi1b: [{ value: 1, label: 'pin1' }, { value: 2, label: 'pin2' }, { value: 3, label: 'pin3' }],
-	  rpi2a: [{ value: 1, label: 'pin1' }, { value: 2, label: 'pin2' }, { value: 3, label: 'pin3' }],
-	  rpi2b: [{ value: 1, label: 'pin1' }, { value: 2, label: 'pin2' }, { value: 3, label: 'pin3' }],
-	  rpi3a: [{ value: 1, label: 'pin1' }, { value: 2, label: 'pin2' }, { value: 3, label: 'pin3' }],
-	  rpi3b: [{ value: 1, label: 'pin1' }, { value: 2, label: 'pin2' }, { value: 3, label: 'pin3' }],
-	  arduino: [{ value: 1, label: 'pin1' }, { value: 2, label: 'pin2' }, { value: 3, label: 'pin3' }]
+	  rpi: [{ value: 3, label: 'BCM 2 (SDA)' }, { value: 5, label: 'BCM 3 (SCL)' }, { value: 7, label: 'BCM 4 (GPCLK0)' }, { value: 8, label: 'BCM 14 (TXD)' }, { value: 10, label: 'BCM 15 (RXD)' }, { value: 11, label: 'BCM 17' }, { value: 12, label: 'BCM 18 (PWM0)' }, { value: 13, label: 'BCM 27' }, { value: 15, label: 'BCM 22' }, { value: 16, label: 'BCM 23' }, { value: 18, label: 'BCM 24' }, { value: 19, label: 'BCM 10 (MOSI)' }, { value: 21, label: 'BCM 9 (MISO)' }, { value: 22, label: 'BCM 25' }, { value: 23, label: 'BCM 11 (SCLK)' }, { value: 24, label: 'BCM 8 (CE0)' }, { value: 26, label: 'BCM 7 (CE1)' }, { value: 27, label: 'BCM 0 (ID_SD)' }, { value: 28, label: 'BCM 1 (ID_SC)' }, { value: 29, label: 'BCM 5' }, { value: 31, label: 'BCM 6' }, { value: 32, label: 'BCM 12 (PWM0)' }, { value: 33, label: 'BCM 13 (PWM1)' }, { value: 35, label: 'BCM 19 (MISO)' }, { value: 36, label: 'BCM 16' }, { value: 37, label: 'BCM 26' }, { value: 38, label: 'BCM 20 (MOSI)' }, { value: 40, label: 'BCM 21 (SCLK)' }],
+	  arduino: [{ value: 1, label: 'pin1' }]
 	};
 	
 	var SelectPin = function (_React$Component) {
@@ -410,27 +434,15 @@
 	      var optionsSelect = [];
 	      switch (props.controller) {
 	        case 1:
-	          optionsSelect = options.rpi0;
-	          break;
 	        case 2:
-	          optionsSelect = options.rpi1a;
-	          break;
 	        case 3:
-	          optionsSelect = options.rpi1b;
-	          break;
 	        case 4:
-	          optionsSelect = options.rpi2a;
-	          break;
 	        case 5:
-	          optionsSelect = options.rpi2b;
-	          break;
 	        case 6:
-	          optionsSelect = options.rpi3a;
-	          break;
 	        case 7:
-	          optionsSelect = options.rpi3b;
+	          optionsSelect = options.rpi;
 	          break;
-	        case 7:
+	        case 8:
 	          optionsSelect = options.arduino;
 	          break;
 	        default:
@@ -445,7 +457,7 @@
 	        Ui.SelectField,
 	        { floatingLabelText: 'Pin', disabled: this.state.options.length ? false : true },
 	        this.state.options.map(function (item, i) {
-	          return React.createElement(Ui.MenuItem, { key: i, value: item.value, primaryText: item.label });
+	          return React.createElement(Ui.MenuItem, { key: i, value: item.value, primaryText: item.label + ' (physical ' + item.value + ')' });
 	        })
 	      );
 	    }
