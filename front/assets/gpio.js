@@ -492,15 +492,21 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Loading = __webpack_require__(12);
+	
+	var _Loading2 = _interopRequireDefault(_Loading);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -514,22 +520,82 @@
 		function List() {
 			_classCallCheck(this, List);
 	
-			return _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this));
+	
+			_this.state = {
+				logics: [],
+				render: false
+			};
+			return _this;
 		}
 	
 		_createClass(List, [{
-			key: "render",
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var _this2 = this;
+	
+				this.context.io.run('gpio:logic:list', {}, function (data) {
+					_this2.setState({ render: true, logics: data });
+				});
+			}
+		}, {
+			key: 'render',
 			value: function render() {
 				return React.createElement(
-					"div",
-					null,
-					"create"
+					_Loading2.default,
+					{ render: this.state.render },
+					React.createElement(
+						Ui.Table,
+						null,
+						React.createElement(
+							Ui.TableHeader,
+							null,
+							React.createElement(
+								Ui.TableRow,
+								null,
+								React.createElement(
+									Ui.TableHeaderColumn,
+									null,
+									'Label'
+								),
+								React.createElement(
+									Ui.TableHeaderColumn,
+									null,
+									'Action'
+								)
+							)
+						),
+						React.createElement(
+							Ui.TableBody,
+							null,
+							this.state.logics.map(function (item, i) {
+								return React.createElement(
+									Ui.TableRow,
+									{ key: i },
+									React.createElement(
+										Ui.TableRowColumn,
+										null,
+										item.label
+									),
+									React.createElement(
+										Ui.TableRowColumn,
+										null,
+										'Employed'
+									)
+								);
+							})
+						)
+					)
 				);
 			}
 		}]);
 	
 		return List;
 	}(React.Component);
+	
+	List.contextTypes = {
+		io: React.PropTypes.object
+	};
 	
 	exports.default = List;
 
@@ -588,6 +654,81 @@
 	
 	module.exports = {
 	  Gpio: 'Gpio'
+	};
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _style = __webpack_require__(13);
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Loading = function (_React$Component) {
+		_inherits(Loading, _React$Component);
+	
+		function Loading() {
+			var _ref;
+	
+			_classCallCheck(this, Loading);
+	
+			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+				args[_key] = arguments[_key];
+			}
+	
+			return _possibleConstructorReturn(this, (_ref = Loading.__proto__ || Object.getPrototypeOf(Loading)).call.apply(_ref, [this].concat(args)));
+		}
+	
+		_createClass(Loading, [{
+			key: 'render',
+			value: function render() {
+				if (this.props.render) {
+					if (this.props.children.length && Array.isArray(this.props.children)) {
+						return React.createElement(
+							'div',
+							null,
+							this.props.children.map(function (el, i) {
+								return el;
+							})
+						);
+					} else {
+						return React.createElement(
+							'div',
+							null,
+							this.props.children
+						);
+					}
+				}
+				return React.createElement(Ui.CircularProgress, { style: _style.style, size: 80, thickness: 5 });
+			}
+		}]);
+	
+		return Loading;
+	}(React.Component);
+	
+	exports.default = Loading;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports.style = {
+	  left: '50%',
+	  marginLeft: '-40px'
 	};
 
 /***/ }

@@ -10,5 +10,12 @@ export default [
 			// console.log(data, fc);
 			fc(data);
 		}
+	},
+	{
+		'name': 'gpio:logic:list',
+		'depPlugin': ['tableLogic'],
+		'call': function(data, fc){
+			fc(this.tableLogic.list());
+		}
 	}
 ];
