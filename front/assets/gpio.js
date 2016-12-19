@@ -299,6 +299,7 @@
 				},
 				modelController: null
 			};
+			_this.submit = _this.submit.bind(_this);
 			return _this;
 		}
 	
@@ -324,9 +325,25 @@
 		}, {
 			key: 'selectedSwitch',
 			value: function selectedSwitch(e, index, value) {
-				console.log(value);
 				var form = this.state.form;
 				form.typeSwitch = value;
+				this.setState({ form: form });
+			}
+		}, {
+			key: 'submit',
+			value: function submit(e) {
+				e.stopPropagation();
+				e.preventDefault();
+				this.context.io.run('gpio:logic:create', this.state.form, function (data) {
+					console.log(data);
+					// this.setState({model: data, render: true});
+				});
+			}
+		}, {
+			key: 'setLabel',
+			value: function setLabel(e, value) {
+				var form = this.state.form;
+				form.label = value;
 				this.setState({ form: form });
 			}
 		}, {
@@ -343,8 +360,8 @@
 					null,
 					React.createElement(
 						'form',
-						null,
-						React.createElement(Ui.TextField, { floatingLabelText: 'Logic name' }),
+						{ onSubmit: this.submit },
+						React.createElement(Ui.TextField, { floatingLabelText: 'Logic name', onChange: this.setLabel.bind(this) }),
 						React.createElement('br', null),
 						React.createElement(
 							Ui.SelectField,
@@ -373,8 +390,9 @@
 						),
 						React.createElement('br', null),
 						React.createElement(_SelectPin2.default, { controller: this.state.modelController }),
-						React.createElement(Ui.Toggle, { label: 'Return State', onToggle: this.setReturnState.bind(this) }),
-						formReturnState
+						React.createElement(Ui.Toggle, { label: 'Return State', onToggle: this.setReturnState.bind(this), value: this.state.form.returnState }),
+						formReturnState,
+						React.createElement(Ui.RaisedButton, { label: Lang.save, primary: true, style: { marginTop: '20px', float: 'right' }, type: 'submit' })
 					)
 				);
 			}
@@ -382,6 +400,10 @@
 	
 		return Create;
 	}(React.Component);
+	
+	Create.contextTypes = {
+		io: React.PropTypes.object
+	};
 	
 	exports.default = Create;
 

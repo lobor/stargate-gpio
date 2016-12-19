@@ -6,6 +6,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "scripts": {
+    "install": "node install.js"
   }
 }

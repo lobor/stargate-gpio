@@ -11,7 +11,8 @@ class Create extends React.Component{
 				typeSwitch: null,
 			},
 			modelController: null
-		}
+		};
+		this.submit = this.submit.bind(this);
 	}
 
 	selectedController(e, index, value){
@@ -31,9 +32,23 @@ class Create extends React.Component{
 	}
 
 	selectedSwitch(e, index, value){
-		console.log(value);
 		let form = this.state.form;
 		form.typeSwitch = value;
+		this.setState({ form: form });
+	}
+
+	submit(e){
+		e.stopPropagation();
+		e.preventDefault();
+		this.context.io.run('gpio:logic:create', this.state.form, (data) => {
+			console.log(data);
+      // this.setState({model: data, render: true});
+    });
+	}
+
+	setLabel(e, value){
+		let form = this.state.form;
+		form.label = value;
 		this.setState({ form: form });
 	}
 
@@ -48,8 +63,8 @@ class Create extends React.Component{
 
 		return (
       <div>
-				<form>
-					<Ui.TextField floatingLabelText="Logic name" />
+				<form onSubmit={this.submit}>
+					<Ui.TextField floatingLabelText="Logic name" onChange={ this.setLabel.bind(this) } />
 					<br />
 					<Ui.SelectField floatingLabelText="Select model micro-controller" value={this.state.modelController} onChange={ this.selectedController.bind(this) }>
 		        <Ui.MenuItem value={1} primaryText="RPI zero" />
@@ -72,12 +87,18 @@ class Create extends React.Component{
 		      </Ui.SelectField>
 					<br />
 					<SelectPin controller={this.state.modelController} />
-					<Ui.Toggle label="Return State" onToggle={ this.setReturnState.bind(this) } />
+					<Ui.Toggle label="Return State" onToggle={ this.setReturnState.bind(this) } value={ this.state.form.returnState } />
 					{formReturnState}
+					<Ui.RaisedButton label={Lang.save} primary={true} style={ {marginTop: '20px', float: 'right'} } type="submit" />
 				</form>
       </div>
 		);
 	}
 }
+
+
+Create.contextTypes = {
+	io: React.PropTypes.object
+};
 
 export default Create;

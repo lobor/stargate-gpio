@@ -1,4 +1,4 @@
 module.exports = {
-	api: require('./api/sampleApi'),
+	api: require('./api/logic'),
 	front: require('./front/sampleFront'),
 };

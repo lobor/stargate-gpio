@@ -1,5 +1,6 @@
+var basePath = process.cwd();
 import { Plugin } from './../../core/';
-
+let db = require(basePath + '/core/db')(basePath + '/db/Gpio');
 
 
 class Gpio extends Plugin {
@@ -9,6 +10,12 @@ class Gpio extends Plugin {
       conf: require('./config/config')
     };
   }
+
+  constructor () {
+    super();
+
+    this.tableLogic = db.use('Logics');
+  };
 
   onLoad(){
 
